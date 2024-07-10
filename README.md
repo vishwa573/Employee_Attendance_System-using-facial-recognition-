@@ -112,6 +112,7 @@ This is a Django-based project that manages employee attendance using facial rec
 - `templates/`: HTML templates for rendering web pages.
 - `static/`: Static files (CSS, JS).
 - `media/`: The images of the employees and the model is stored here
+- `mypro/`: Is the main base directory of the django project
 
 ## Contributing
 
