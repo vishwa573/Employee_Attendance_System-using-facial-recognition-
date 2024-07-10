@@ -47,7 +47,7 @@ This is a Django-based project that manages employee attendance using facial rec
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/employee-attendance-system.git
+    git clone https://github.com/vishwa573/Employee_Attendance_System-using-facial-recognition-.git
     cd employee-attendance-system
     ```
 
