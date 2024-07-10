@@ -1,0 +1,123 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Ensure full viewport height */
+}
+/* Header styles */
+header {
+    background-color: #0073e6;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%; /* Full width */
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+.auth-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.auth-links p, .auth-links a {
+    margin: 0;
+}
+.auth-links a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0073e6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.auth-links a.button:hover {
+    background-color: #005bb5;
+}
+/* Main content styles */
+main {
+    flex: 1; /* Allow main content to expand */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px;
+    max-width: 800px; /* Set maximum width for the content */
+    width: 100%; /* Full width */
+}
+.content {
+    background-color: white;
+    padding: 30px; /* Increased padding for larger box */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width */
+}
+.content h2 {
+    margin-top: 0;
+}
+.content p {
+    margin-bottom: 15px;
+}
+.content p a.button {
+    display: inline-block;
+    padding: 12px 24px; /* Increased padding for larger buttons */
+    background-color: #0073e6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.content p a.button:hover {
+    background-color: #005bb5;
+}
+/* Footer styles */
+footer {
+    background-color: #0073e6;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8em;
+    width: 100%; /* Full width */
+}
+/* Messages styles */
+
+.messages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.messages li {
+    background-color: #ffffff;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.messages .success {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #27a92f;
+}
+.messages .error {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #e50909;
+}
+.messages .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
