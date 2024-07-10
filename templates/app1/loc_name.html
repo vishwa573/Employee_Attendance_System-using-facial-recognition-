@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location Name Request</title>
+    {% load static %}
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333; /* Dark gray */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #0073e6; /* Blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #005bb5; /* Darker blue */
+        }
+
+        p {
+            text-align: center;
+            color: #333; /* Dark gray */
+        }
+
+        /* Close Button */
+        .close {
+            color: #888; /* Gray */
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .close:hover {
+            color: #000; /* Black */
+        }
+
+       
+    </style>
+</head>
+<body>
+   
+    <div class="form-container">
+        <p>You are not within the allowed locations</p>
+        <p>Provide the name of this location for getting access</p>
+        <p>Try again if you are in the allowed locations</p>
+        
+        <form method="POST" >
+            {% csrf_token %}
+            <label for="location_name">Location Name:</label>
+            <input type="text" id="location_name" name="location_name" required>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

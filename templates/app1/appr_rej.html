@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager View</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app1/manager.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Reports</h1>
+    
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                            <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <h2>Navigation</h2>
+        <div class="links">
+            
+           
+            <a href="{% url 'approved_registerations' manager_id=id manager_name=username %}" class="button">Approved Registrations</a>
+            <a href="{% url 'rejected_registerations' manager_id=id manager_name=username %}" class="button">Rejected Registrations</a>
+            <a href="{% url 'see_attendance' manager_id=id manager_name=username %}" class="button">Employee Attendance</a>
+            <a href="{% url 'displayy' manager_id=id manager_name=username %}" class="button">Home</a>
+        </div>
+        {% if appr %}
+        <h2>Approved Registerations</h2>
+        {% endif %}
+        {% if rej %}
+        <h2>Rejected Registerations</h2>
+        {% endif %}
+        {% if employees %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Last_login</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.idd }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{employee.last_login}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+
+        {% if appr %}
+        <p class="no-users">No Approved Registerations</p>
+        {% endif %}
+
+        {% if rej %}
+        <p class="no-users">No Rejected Registerations</p>
+        {% endif %}
+
+        {% endif %}
+    </div>
+</body>
+</html>

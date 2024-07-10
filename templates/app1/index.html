@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Company</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app1/index.css' %}">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Company</h1>
+        <div class="auth-links">
+            {% if username %}
+                <a href="{% url 'signout' %}" class="button">Sign out</a>
+            {% else %}
+                <a href="{% url 'signin' %}" class="button">Sign-in</a>
+                <a href="{% url 'register' %}" class="button">Register</a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <main>
+        <section class="content">
+            {% if messages %}
+                <div class="messages">
+                    <ul>
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                {{ message }}
+                                <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <h2>Content Section</h2>
+            {% if username %}
+                <p>Welcome, {{ username }}!</p>
+                
+                {% if manager %}
+                    <p><a href="{% url 'manview' manager_id=id manager_name=username %}" class="button">Reports</a></p>
+                    <p><a href="{% url 'update_faces' manager_id=id manager_name=username %}" class="button">Requests</a></p>
+                    <p><a href="{% url 'remove_employees' manager_id=id manager_name=username %}" class="button">Remove Employee</a></p>
+                {% endif %}
+                {% if registered %}
+                    <p><a href="{% url 'recognise' employee_id=id %}" class="button">Mark Attendance</a></p>
+                    <p><a href="{% url 'update_img' employee_id=id %}" class="button">Update Face</a></p>
+                    <p><a href="#" class="button" id="download-csv-button">Download Attendance</a></p>
+
+                    <form action="{% url 'download' employee_id=id %}" method="get" id="report-type-form" class="hidden">
+                        <label for="report_type">Duration:</label>
+                        <select name="report_type" id="report_type">
+                            <option value="daily">Today</option>
+                            <option value="weekly">This Week</option>
+                            <option value="monthly">This Month</option>
+                            <option value="total">Total</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <br>
+                        <br>
+                        <div id="custom-date-range" class="hidden">
+                            <label for="start_date">Start Date:</label>
+                            <input type="date" id="start_date" name="start_date">
+                            <label for="end_date">End Date:</label>
+                            <input type="date" id="end_date" name="end_date">
+                        </div>
+        
+                        <button type="submit" class="button">Download</button>
+                    </form>
+                {% else %}
+                    <p><a href="{% url 'capture_image' employee_id=id %}" class="button">Register Face</a></p>
+                {% endif %}
+            {% else %}
+                <p>Sign-in to see the content</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Company</p>
+    </footer>
+
+    <script>
+        document.getElementById('download-csv-button').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('report-type-form').classList.toggle('hidden');
+        });
+
+        document.getElementById('report_type').addEventListener('change', function(event) {
+            const customDateRange = document.getElementById('custom-date-range');
+            if (event.target.value === 'custom') {
+                customDateRange.classList.remove('hidden');
+            } else {
+                customDateRange.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

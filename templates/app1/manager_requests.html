@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager View</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app1/manager.css' %}">
+
+</head>
+<body>
+    {% if messages %}
+        <div class="messages">
+            <ul>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                        <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="container">
+        <h1>Reports</h1>
+    
+        
+
+        <h2>Navigation</h2>
+        <div class="links">
+            <a href="{% url 'manview' manager_id=id manager_name=username %}" class="button">Approval Requests</a>
+            <a href="{% url 'update_faces' manager_id=id manager_name=username %}" class="button">Update Face Requests</a>
+            <a href="{% url 'update_loc' manager_id=id manager_name=username %}" class="button">Update Location Requests</a>
+            <a href="{% url 'displayy' manager_id=id manager_name=username %}" class="button">Home</a>
+        </div>
+
+        
+        {% if employees %}
+        <h2>Approval Requests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.idd }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="employee_id" value="{{ employee.idd }}">
+                            <button type="submit" name="btn" value="1">Approve</button>
+                            <button type="submit" name="btn" value="2">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-users">All registrations have been either approved or rejected.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

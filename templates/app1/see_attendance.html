@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager View</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app1/manager.css' %}">
+    <style>
+        /* Additional CSS for hiding filter options initially */
+        .filter-options {
+            display: none;
+            margin-top: 10px;
+        }
+        .show-filter {
+            display: block !important; /* Ensure it overrides 'display: none' */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                            <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <h1>Reports</h1>
+
+        {% if messages %}
+        <div class="messages">
+            <ul>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                        <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <h2>Navigation</h2>
+        <div class="links">
+            
+            <a href="{% url 'approved_registerations' manager_id=id manager_name=username %}" class="button">Approved Registrations</a>
+            <a href="{% url 'rejected_registerations' manager_id=id manager_name=username %}" class="button">Rejected Registrations</a>
+            <a href="{% url 'see_attendance' manager_id=id manager_name=username %}" class="button">Employee Attendance</a>
+            <a href="{% url 'displayy' manager_id=id manager_name=username %}" class="button">Home</a>
+        </div>
+
+        <form method="GET" class="attendance-form">
+            {% csrf_token %}
+            <button type="button" class="filter-button">Filter</button>
+            <div class="filter-options">
+                <label for="employee_id">Employee ID:</label>
+                <input type="text" id="employee_id" name="employee_id" >
+                <br>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date">
+                
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date">
+
+                <button type="submit" class="view-attendance-button">View Attendance</button>
+            </div>
+            
+        </form>
+
+        {% if emp_attendance %}
+            <h2>Attendance Records</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in emp_attendance %}
+                        <tr>
+                            <td>{{ row.0 }}</td>
+                            <td>{{ row.1 }}</td>
+                            <td>{{ row.2 }}</td>
+                            <td>{{ row.3 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-users">No attendance records found.</p>
+        {% endif %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get references to elements
+            const filterButton = document.querySelector('.filter-button');
+            const filterOptions = document.querySelector('.filter-options');
+
+            // Add click event listener to filter button
+            filterButton.addEventListener('click', function() {
+                // Toggle visibility of filter options
+                filterOptions.classList.toggle('show-filter');
+            });
+        });
+    </script>
+</body>
+</html>

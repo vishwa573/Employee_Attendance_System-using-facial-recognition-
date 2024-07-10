@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove Employee</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app1/manager.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Remove Employee</h1>
+        
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                            <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <h2>Navigation</h2>
+        <div class="links">
+            <a href="{% url 'displayy' manager_id=id manager_name=username %}" class="button">Home</a>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Approved</th>
+                    <th>Last Login</th>
+                    <th>Updated Face</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.idd }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.approved }}</td>
+                        <td>{{ employee.last_login }}</td>
+                        <td>{{ employee.update_face }}</td>
+                        <td>
+                            <form method="post" >
+                                {% csrf_token %}
+                                <input type="hidden" name="employee_id" value="{{ employee.idd }}">
+                                <button type="submit" class="button">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

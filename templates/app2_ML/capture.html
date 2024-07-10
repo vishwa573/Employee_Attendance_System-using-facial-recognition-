@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Image</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app2/capture.css' %}">
+</head>
+<body>
+    
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                            <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <h1>Capture Image for {{ employee.name }}</h1>
+        <p>Click 'c' to take a snap</p>
+        <form method="post" action="{% url 'capture_image' employee_id=employee.idd %}">
+            {% csrf_token %}
+            <button type="submit">Capture Image</button>
+        </form>
+    </div>
+</body>
+</html>

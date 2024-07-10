@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app2/face_recognition.css' %}">
+</head>
+<body>
+   
+    <header><h1>Face Recognition</h1></header>
+    
+    
+    <main>
+        <section class="content">
+            {% if messages %}
+                <div class="messages">
+                    <ul>
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                {{ message }}
+                                <span class="close" onclick="this.parentElement.style.display='none';"> &times;</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <h2>Employee ID = {{ employee_id }}</h2>
+            
+            <p>Click 'c' after you have aligned your face</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Recognize Face</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
